@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div class="container" v-if="menu==='Test Yourself'">
         <div class="flashcard" :class="{rotateY180: flipStatus}">
             <div class="flashcard-front">
@@ -15,16 +16,38 @@
         </div>
         {{category}} || {{menu}}
         
-    </div>    
+    </div>  
+
+
+    <div class="container" v-if="menu === 'Show All'">
+        <div class="show__all">
+            <BasicFlashcard v-for="(item, index) in filteredFlashcards"
+             :key="index"
+             :item="item"
+             @click.native="removeFlashcard(index)"
+             />
+
+        </div>
+    </div>
+
+    <div class="container" v-if="menu === 'Add New Flashcard'">
+        Add New Flashcard
+    </div>
+
+    </div>  
 </template>
 <script>
 
 import { db } from '../firebase'
+import BasicFlashcard from './BasicFlashcard'
 
 export default {
     props : {
         category : String,
         menu : String,
+    },
+    components : {
+        BasicFlashcard,
     },
     
     data() {
@@ -67,6 +90,10 @@ export default {
         },
         addCard() {
             db.collection("cards").add(this.newFlashCard);
+        },
+        removeFlashcard(index) {
+            let uuid = this.filteredFlashcards[index]['.key']
+            db.collection('cards').doc(uuid).delete()
         }
     },
     watch :{
@@ -164,6 +191,14 @@ export default {
         transform-style: preserve-3d;
 
     }
+    .show__all {
+        border: 1px solid black;
+        width: 50%;
+        height: 100%;
+        overflow-y: scroll;
+        cursor: pointer;
+    }
+
 
 
     .flashcard-front, .flashcard-back {
