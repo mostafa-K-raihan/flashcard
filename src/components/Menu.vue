@@ -40,6 +40,11 @@ export default {
                     title : "Add New Flashcard",
                     active : false,
                 },
+
+                {
+                    title : "Show All",
+                    active : false,
+                }
             ],
 
             categories : [
@@ -80,7 +85,9 @@ export default {
             array[index].active= !array[index].active;
             if( heading === 'category' ){
                 this.$emit("changeCategory", array[index].title);
-            }
+            }else if( heading === "menu" ) {
+                this.$emit("changeMenu", array[index].title);
+            } 
         }
     }
 }

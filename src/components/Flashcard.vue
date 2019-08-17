@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="menu==='Test Yourself'">
         <div class="flashcard" :class="{rotateY180: flipStatus}">
             <div class="flashcard-front">
                 <p class="element"> {{filteredFlashcards[flashcardIndex].front}} => {{filteredFlashcards[flashcardIndex].type}}</p>
@@ -13,7 +13,7 @@
             <button class="btn btn-know" @click="knowIt">I Know It</button>
             <button class="btn btn-next" @click="next">Next Card </button>
         </div>
-        {{category}}
+        {{category}} || {{menu}}
         
     </div>    
 </template>
@@ -24,73 +24,50 @@ import { db } from '../firebase'
 export default {
     props : {
         category : String,
+        menu : String,
     },
     
     data() {
         return {
-            cards : [],
+           
             flashcardIndex:0,
             flipStatus: false,
             styleObject : {
                 'transform' : "rotateY('180deg')",
             },
-            flashcards : [
-                {
-                    front : "Question 1",
-                    back : "Answer 1",
-                    type : "General",
-                    category : "Algorithm"
-
-                },
-
-                {
-                    front : "Question 2",
-                    back : "Answer 2",
-                    type : "Code",
-                    category : "Database"
-                },
-
-                {
-                    front : "Question 3",
-                    back : "Answer 3",
-                    type : "General",
-                    category : "Networking",
-                },
-
-                {
-                    front : "Question 4",
-                    back : "Answer 4",
-                    type : "General",
-                    category : "Networking",
-                },
-            ],
+            flashcards : [],
             filteredFlashcards : [],
+            newFlashCard : {
+                front : "New Question",
+                back : "New Result",
+                type : "New Type",
+                category : "New Category"
+            },
             
         }
         
     },
     firestore () {
         return {
-            cards: db.collection('cards')
+            filteredFlashcards : db.collection('cards')
         }   
     },
-    created() {
-        this.filteredFlashcards = this.flashcards
-    },
+    // created() {
+    //     this.filteredFlashcards = this.flashcards
+    // },
     methods: {
         flip() {
             this.flipStatus =! this.flipStatus;
         },
         next() {
-            if(this.flashcardIndex < this.filteredFlashcards.length-1) {
-                this.flashcardIndex ++;
-            }
+            this.flashcardIndex = Math.floor(Math.random()* this.filteredFlashcards.length)
         },
         knowIt () {
-            if(this.flashcardIndex < this.filteredFlashcards.length-1) {
-                this.flashcardIndex ++;
-            }
+            this.flashcardIndex = Math.floor(Math.random()* this.filteredFlashcards.length)
         },
+        addCard() {
+            db.collection("cards").add(this.newFlashCard);
+        }
     },
     watch :{
         category () {
@@ -110,6 +87,9 @@ export default {
             }
             
             
+        },
+        menu() {
+            this.addCard();
         }
     }
 }

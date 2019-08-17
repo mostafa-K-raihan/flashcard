@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    <Menu @changeCategory="handleCategoryChange"/>
-    <Flashcard :category = "category"/>
+    <Menu 
+      @changeCategory="handleCategoryChange"
+      @changeMenu="handleMenuChange"
+    />
+    <Flashcard 
+    :category = "category"
+    :menu = "menu"
+    />
   </div>
 </template>
 
@@ -16,12 +22,16 @@ export default {
   },
   data () {
     return {
-      category : "All"
+      category : "All",
+      menu : "Test Yourself",
     }
   },
   methods : {
     handleCategoryChange (value) {
       this.category = value;
+    },
+    handleMenuChange(value) {
+      this.menu = value;
     }
   }
 }
