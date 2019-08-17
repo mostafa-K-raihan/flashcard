@@ -31,7 +31,9 @@
     </div>
 
     <div class="container" v-if="menu === 'Add New Flashcard'">
-        Add New Flashcard
+        <div class="addNew">
+            <AddNewFlashcard/>
+        </div>
     </div>
 
     </div>  
@@ -40,6 +42,7 @@
 
 import { db } from '../firebase'
 import BasicFlashcard from './BasicFlashcard'
+import AddNewFlashcard from './AddNewFlashcard'
 
 export default {
     props : {
@@ -48,6 +51,7 @@ export default {
     },
     components : {
         BasicFlashcard,
+        AddNewFlashcard,
     },
     
     data() {
@@ -115,14 +119,17 @@ export default {
             
             
         },
-        menu() {
-            this.addCard();
-        }
+        
     }
 }
 </script>
 <style scoped>
 
+    .addNew {
+        width: 50%;
+        height : 100%;
+        border : 1px solid black;
+    }
     .btn__place {
         display : flex;
         align-self: center;
@@ -183,7 +190,7 @@ export default {
         border: 1px solid black;
         background-color: white;
         
-        width: 40%;
+        width: 50%;
         height : 100%;
         position: relative;
         transition: transform 800ms;
