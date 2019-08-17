@@ -18,12 +18,17 @@
     </div>    
 </template>
 <script>
+
+import { db } from '../firebase'
+
 export default {
     props : {
         category : String,
     },
+    
     data() {
         return {
+            cards : [],
             flashcardIndex:0,
             flipStatus: false,
             styleObject : {
@@ -63,6 +68,11 @@ export default {
             
         }
         
+    },
+    firestore () {
+        return {
+            cards: db.collection('cards')
+        }   
     },
     created() {
         this.filteredFlashcards = this.flashcards
