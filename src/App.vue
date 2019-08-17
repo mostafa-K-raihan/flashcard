@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Menu @changeCategory="handleCategoryChange"/>
+    <Flashcard :category = "category"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Flashcard from './components/Flashcard.vue'
+import Menu from './components/Menu.vue'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Flashcard,
+    Menu
+  },
+  data () {
+    return {
+      category : "All"
+    }
+  },
+  methods : {
+    handleCategoryChange (value) {
+      this.category = value;
+    }
   }
 }
 </script>
