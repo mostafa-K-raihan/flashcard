@@ -12,6 +12,7 @@
     "firebase": "^6.4.0",
     "vue": "^2.6.10",
     "vue-firestore": "^0.3.22",
+    "vue-toasted": "^1.1.27",
     "vuefire": "^2.0.0-alpha.24"
   },
   "devDependencies": {
@@ -32,7 +33,10 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
+    
     "parserOptions": {
       "parser": "babel-eslint"
     }

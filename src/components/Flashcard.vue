@@ -20,13 +20,16 @@
 
 
     <div class="container" v-if="menu === 'Show All'">
-        <div class="show__all">
+        <div class="show__all" v-if="filteredFlashcards.length">
             <BasicFlashcard v-for="(item, index) in filteredFlashcards"
              :key="index"
              :item="item"
              @click.native="removeFlashcard(index)"
              />
 
+        </div>
+        <div class="show__all" v-else>
+            Nothing Found
         </div>
     </div>
 
@@ -64,12 +67,7 @@ export default {
             },
             flashcards : [],
             filteredFlashcards : [],
-            newFlashCard : {
-                front : "New Question",
-                back : "New Result",
-                type : "New Type",
-                category : "New Category"
-            },
+        
             
         }
         
@@ -93,11 +91,23 @@ export default {
             this.flashcardIndex = Math.floor(Math.random()* this.filteredFlashcards.length)
         },
         addFlashcard(val) {
-            db.collection('cards').add(val);
+            db.collection('cards').add(val)
+            .then(()=>this.$toasted.success('New Flashcard Added!').goAway(2500))
+            .catch(err=>{
+                    this.$toasted.error('Oops! Something went wrong!').goAway(2500)
+                    console.log(err)
+                }
+            );
         },
         removeFlashcard(index) {
             let uuid = this.filteredFlashcards[index]['.key']
             db.collection('cards').doc(uuid).delete()
+            .then(()=>this.$toasted.success('Successfully Deleted').goAway(2500))
+            .catch(err=>{
+                    this.$toasted.error('Oops! Something went wrong!').goAway(2500)
+                    console.log(err)
+                }
+            );
         }
     },
     watch :{
