@@ -32,7 +32,7 @@
 
     <div class="container" v-if="menu === 'Add New Flashcard'">
         <div class="addNew">
-            <AddNewFlashcard/>
+            <AddNewFlashcard @addFlashcard="addFlashcard"/>
         </div>
     </div>
 
@@ -56,7 +56,7 @@ export default {
     
     data() {
         return {
-           
+            
             flashcardIndex:0,
             flipStatus: false,
             styleObject : {
@@ -92,8 +92,8 @@ export default {
         knowIt () {
             this.flashcardIndex = Math.floor(Math.random()* this.filteredFlashcards.length)
         },
-        addCard() {
-            db.collection("cards").add(this.newFlashCard);
+        addFlashcard(val) {
+            db.collection('cards').add(val);
         },
         removeFlashcard(index) {
             let uuid = this.filteredFlashcards[index]['.key']
