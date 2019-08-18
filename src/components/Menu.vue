@@ -53,25 +53,25 @@ export default {
                     active : true,
                 },
 
-                {
-                    title : "Data Structure",
-                    active : false,
-                },
+                // {
+                //     title : "Data Structure",
+                //     active : false,
+                // },
 
-                {
-                    title : "Algorithm",
-                    active : false,
-                },
+                // {
+                //     title : "Algorithm",
+                //     active : false,
+                // },
 
-                {
-                    title : "Networking",
-                    active : false,
-                },
+                // {
+                //     title : "Networking",
+                //     active : false,
+                // },
 
-                {
-                    title : "Database",
-                    active : false,
-                },
+                // {
+                //     title : "Database",
+                //     active : false,
+                // },
 
 
             ],
